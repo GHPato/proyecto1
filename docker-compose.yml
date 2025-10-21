@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: inventory-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  app:
+    build: .
+    container_name: inventory-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=sqlite:///./data/inventory.db
+      - DEBUG=false
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health/')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo 'Creating data directory...' &&
+        mkdir -p /app/data &&
+        echo 'Waiting for Redis to be ready...' &&
+        python -c 'import redis; import time; r=redis.Redis(host=\"redis\", port=6379); [time.sleep(1) for _ in range(30) if not r.ping()]' &&
+        echo 'Initializing database...' &&
+        python scripts/seed_data.py &&
+        echo 'Starting application...' &&
+        uvicorn main:app --host 0.0.0.0 --port 8000
+      "
+
+volumes:
+  redis_data:

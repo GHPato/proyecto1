@@ -1,0 +1,53 @@
+Please generate unit tests for it, using the appropriate testing framework for Python (e.g., pytest or unittest).
+
+The tests should focus on verifying both functional correctness and concurrency behavior.
+
+Include tests for:
+
+Concurrency and consistency
+
+Multiple clients updating or reserving the same product stock concurrently.
+
+Ensuring that Redis distributed locks or optimistic locking mechanisms prevent overselling.
+
+Detecting and handling version conflicts properly (e.g., rejecting updates if inventory version changed).
+
+Business logic
+
+Reserving, confirming, and cancelling stock works as expected.
+
+Stock decreases only after confirmation.
+
+Cancelling a reservation restores the available stock.
+
+Error handling for invalid product IDs or insufficient stock.
+
+Integration-like behavior (simulated)
+
+Publishing and subscribing of stock update events (e.g., Redis Pub/Sub) triggers real-time central inventory updates.
+
+Cache invalidation occurs correctly after updates.
+
+Fault tolerance
+
+Verify retry logic or error recovery mechanisms work as intended (e.g., simulated Redis or DB failure).
+
+Ensure system returns consistent errors and maintains integrity.
+
+Optional extra
+
+Tests for metrics middleware: verify metrics increment or record events correctly when operations succeed or fail.
+
+Please:
+
+Use mocking for Redis, DB, or message broker interactions (no external dependencies).
+
+Use parameterized tests where appropriate to test multiple inputs.
+
+Include assertions with clear messages for readability.
+
+Use consistent test naming conventions and structure (e.g., test_concurrent_stock_reservation_should_lock_correctly).
+
+Provide brief inline comments explaining what each test validates.
+
+Finally, generate the code in Python, formatted for pytest.
