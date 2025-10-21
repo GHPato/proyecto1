@@ -146,6 +146,12 @@ class StockUpdateSchema(BaseModel):
         ..., 
         description="Operation to perform: 'add' or 'subtract'"
     )
+    reason: Optional[str] = Field(
+        None,
+        min_length=1,
+        max_length=200,
+        description="Reason for the stock update (optional)"
+    )
 
     @validator('product_id', 'store_id')
     def validate_uuid_format(cls, v):

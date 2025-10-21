@@ -158,10 +158,13 @@ async def update_stock(
     service: InventoryService = Depends(get_inventory_service)
 ):
     try:
+        reason = stock_update.reason or f"Manual stock update via API - {stock_update.operation} operation"
+        
         stock_update_model = StockUpdate(
             product_id=stock_update.product_id,
             store_id=stock_update.store_id,
-            quantity_change=stock_update.quantity if stock_update.operation == "add" else -stock_update.quantity
+            quantity_change=stock_update.quantity if stock_update.operation == "add" else -stock_update.quantity,
+            reason=reason
         )
         success = await service.update_stock(stock_update_model)
         
@@ -170,7 +173,7 @@ async def update_stock(
                 "Stock updated successfully",
                 product_id=str(stock_update.product_id),
                 store_id=str(stock_update.store_id),
-                quantity_change=stock_update.quantity_change
+                quantity_change=stock_update.quantity if stock_update.operation == "add" else -stock_update.quantity
             )
             return {"message": "Stock updated successfully"}
         else:

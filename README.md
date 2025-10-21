@@ -79,70 +79,6 @@ Un middleware personalizado exporta métricas que pueden integrarse fácilmente 
 
 ## 📂 Estructura del Proyecto
 
-```
-hackerrank-challenge/
-├── 📁 src/                          # Código fuente principal
-│   ├── 📁 api/                      # Endpoints de FastAPI
-│   │   ├── health.py               # Health checks y métricas
-│   │   ├── inventory.py            # Operaciones de inventario
-│   │   └── stores.py               # Gestión de tiendas
-│   ├── 📁 config/                   # Configuración del sistema
-│   │   └── event_bus_config.py     # Configuración del bus de eventos
-│   ├── 📁 implementations/          # Implementaciones concretas
-│   │   └── redis_event_bus.py      # Implementación Redis del bus de eventos
-│   ├── 📁 interfaces/               # Interfaces abstractas
-│   │   └── event_bus.py            # Contratos para EventBus, LockManager, CacheManager
-│   ├── 📁 models/                   # Modelos de datos
-│   │   ├── base.py                 # Modelo base con funcionalidades comunes
-│   │   ├── database.py             # Modelos de base de datos (SQLAlchemy)
-│   │   ├── inventory.py            # Modelos de inventario y reservas
-│   │   └── store.py                # Modelos de tiendas
-│   ├── 📁 schemas/                  # Esquemas de validación (Pydantic)
-│   │   ├── inventory_schemas.py    # Validación de requests/responses de inventario
-│   │   └── store_schemas.py        # Validación de requests/responses de tiendas
-│   ├── 📁 services/                 # Lógica de negocio
-│   │   ├── event_service.py        # Servicio de eventos y pub/sub
-│   │   ├── inventory_service.py    # Lógica de negocio de inventario
-│   │   └── store_service.py        # Lógica de negocio de tiendas
-│   ├── 📁 tests/                    # Suite de tests (66 tests)
-│   │   ├── test_business_logic.py  # Tests de lógica de negocio
-│   │   ├── test_concurrent_updates.py # Tests de concurrencia y locking
-│   │   ├── test_error_handling.py  # Tests de manejo de errores
-│   │   ├── test_event_publishing.py # Tests de publicación de eventos
-│   │   ├── test_fault_tolerance.py # Tests de tolerancia a fallos
-│   │   └── test_metrics_logging.py # Tests de métricas y logging
-│   ├── 📁 utils/                    # Utilidades y helpers
-│   │   ├── database.py             # Configuración de base de datos
-│   │   ├── error_utils.py          # Utilidades de manejo de errores
-│   │   ├── logging.py              # Configuración de logging
-│   │   ├── middleware.py           # Middleware de FastAPI
-│   │   ├── prometheus.py           # Métricas de Prometheus
-│   │   └── redis_client.py         # Cliente Redis
-│   ├── constants.py                # Constantes del sistema
-│   └── exceptions.py               # Excepciones personalizadas
-├── 📁 scripts/                      # Scripts de utilidad
-│   ├── reset_database.py           # Reset de base de datos
-│   └── seed_data.py                # Carga de datos iniciales
-├── 📁 docs/                         # Documentación
-│   └── diagrama.png                # Diagrama de arquitectura
-├── 📁 prompts/                      # Prompts utilizados para GenAI
-│   ├── readme.txt                  # Prompt para generación de README
-│   └── tests.txt                   # Prompt para generación de tests
-├── 📁 data/                         # Datos persistentes
-│   └── inventory.db                # Base de datos SQLite
-├── 📁 logs/                         # Archivos de log
-├── 📁 config/                       # Configuración adicional
-│   └── settings.py                 # Configuración de la aplicación
-├── 📄 main.py                      # Punto de entrada de la aplicación
-├── 📄 docker-compose.yml           # Orquestación de contenedores
-├── 📄 Dockerfile                   # Imagen Docker
-├── 📄 requirements.txt             # Dependencias de Python
-├── 📄 pytest.ini                  # Configuración de pytest
-├── 📄 README.md                    # Documentación principal
-├── 📄 run.md                       # Instrucciones de ejecución
-├── 📄 technical-decisions.md       # Justificaciones técnicas
-└── 📄 PROJECT_STATUS.md            # Estado del proyecto
-```
 
 ### 🗂️ **Descripción de Carpetas Principales**
 
@@ -153,7 +89,7 @@ hackerrank-challenge/
 | **`src/models/`** | Modelos de datos (SQLAlchemy) y esquemas de validación (Pydantic) |
 | **`src/interfaces/`** | Interfaces abstractas para EventBus, LockManager y CacheManager |
 | **`src/implementations/`** | Implementaciones concretas (Redis) de las interfaces abstractas |
-| **`src/tests/`** | Suite completa de 66 tests unitarios cubriendo todos los aspectos del sistema |
+| **`src/tests/`** | Test unitarios cubriendo gran parte del sistema |
 | **`src/utils/`** | Utilidades: logging, métricas, middleware, manejo de errores y conexiones |
 | **`scripts/`** | Scripts de utilidad para seeding de datos y reset de base de datos |
 | **`docs/`** | Documentación técnica y diagramas de arquitectura |

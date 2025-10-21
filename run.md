@@ -44,10 +44,15 @@ docker-compose ps
 curl http://localhost:8000/health/ready
 ```
 
-### 3. Poblar Base de Datos
+### 3. Base de Datos (Automático)
 ```bash
-# Ejecutar script de datos iniciales
-docker-compose exec api python scripts/seed_data.py
+# La base de datos se crea y puebla automáticamente al levantar los servicios
+# Proceso automático:
+# 1. Crear directorio de datos
+# 2. Esperar a que Redis esté listo
+# 3. Crear tablas de la base de datos
+# 4. Poblar con datos de ejemplo
+# 5. Iniciar la aplicación
 ```
 
 
