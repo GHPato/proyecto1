@@ -73,6 +73,7 @@ async def create_sample_products(session):
         }
     ]
     
+    created_products = []
     for product_data in products:
         product = ProductDB(
             id=product_data["id"],
@@ -85,9 +86,10 @@ async def create_sample_products(session):
             updated_at=datetime.utcnow()
         )
         session.add(product)
+        created_products.append(product)
     
-    print(f"✅ Created {len(products)} products")
-    return products
+    print(f"✅ Created {len(created_products)} products")
+    return created_products
 
 
 async def create_sample_stores(session):
@@ -135,6 +137,7 @@ async def create_sample_stores(session):
         }
     ]
     
+    created_stores = []
     for store_data in stores:
         store = StoreDB(
             id=store_data["id"],
@@ -149,9 +152,10 @@ async def create_sample_stores(session):
             updated_at=datetime.utcnow()
         )
         session.add(store)
+        created_stores.append(store)
     
-    print(f"✅ Created {len(stores)} stores")
-    return stores
+    print(f"✅ Created {len(created_stores)} stores")
+    return created_stores
 
 
 async def create_sample_inventory(session, products, stores):
@@ -204,10 +208,13 @@ async def main():
             # Create stores
             stores = await create_sample_stores(session)
             
+            # Commit products and stores first
+            await session.commit()
+            
             # Create inventory
             await create_sample_inventory(session, products, stores)
             
-            # Commit all changes
+            # Commit inventory changes
             await session.commit()
             print("✅ Database seeded successfully!")
             

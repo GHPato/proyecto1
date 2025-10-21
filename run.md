@@ -28,6 +28,9 @@ cd hackerrank-challenge
 
 ### 1. Levantar Servicios
 ```bash
+# Reconstruir la imagen Docker (importante para obtener los últimos cambios)
+docker-compose build --no-cache
+
 # Levantar todos los servicios (FastAPI + Redis + SQLite)
 docker-compose up -d
 
@@ -208,6 +211,23 @@ python --version
 - **Métricas**: http://localhost:8000/metrics
 - **Health Check**: http://localhost:8000/health/ready
 
+
+## 🚨 Solución de Problemas
+
+### Error: "No such file or directory" para scripts
+```bash
+# Si ves errores como "can't open file /app/scripts/init_database.py"
+# Reconstruir la imagen Docker con los últimos cambios
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+### Error: "no such table: products"
+```bash
+# Si la base de datos no se inicializa correctamente
+docker-compose down -v
+docker-compose up -d
+```
 
 ## 📞 Soporte
 
